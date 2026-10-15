@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./style.js" defer></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div>
+      <h1>My Library</h1>
+      <p id="libraryStats" class="stats"></p>
+    </div>
+    <button id="addBookBtn" class="btn btn-primary" type="button">+ Add book</button>
+  </header>
+
+  <main>
+    <div id="bookshelf" class="bookshelf"></div>
+    <p id="emptyState" class="empty-state" hidden>
+      The shelves are empty. Add your first book!
+    </p>
+  </main>
+
+  <dialog id="bookDialog">
+    <form id="bookForm" novalidate>
+      <h2>Register a new book</h2>
+
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required autocomplete="off" placeholder="The Hobbit">
+
+      <label for="author">Author</label>
+      <input id="author" name="author" type="text" required autocomplete="off" placeholder="J.R.R. Tolkien">
+
+      <label for="pages">Pages</label>
+      <input id="pages" name="pages" type="number" min="1" step="1" required inputmode="numeric" placeholder="310">
+
+      <div class="form-row">
+        <label class="checkbox-label" for="read">
+          <input id="read" name="read" type="checkbox">
+          Already read
+        </label>
+
+        <label for="color">Cover color</label>
+        <input id="color" name="color" type="color" value="#8c5a3b">
+      </div>
+
+      <p id="formError" class="form-error" role="alert" hidden></p>
+
+      <menu>
+        <button id="cancelBtn" class="btn" type="button">Cancel</button>
+        <button class="btn btn-primary" type="submit">Add to shelf</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog">
+    <div class="detail">
+      <h2 id="detailTitle"></h2>
+      <p id="detailAuthor" class="detail-author"></p>
+      <p id="detailMeta" class="detail-meta"></p>
+      <menu>
+        <button id="detailRemove" class="btn btn-danger" type="button">Remove</button>
+        <button id="detailToggle" class="btn" type="button">Mark as read</button>
+        <button id="detailClose" class="btn btn-primary" type="button">Close</button>
+      </menu>
+    </div>
+  </dialog>
+
+</body>
+</html>
