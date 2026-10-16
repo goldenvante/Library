@@ -3,39 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library</title>
+  <title>Odin Library</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./style.js" defer></script>
 </head>
 <body>
 
   <header class="site-header">
-    <div>
-      <h1>My Library</h1>
-      <p id="libraryStats" class="stats"></p>
+    <div class="brand">
+      <h1>The Odin Library</h1>
+      <p class="tagline">Your personal reading shelf</p>
     </div>
-    <button id="addBookBtn" class="btn btn-primary" type="button">+ Add book</button>
+    <button id="addBookBtn" class="btn btn-primary" type="button">
+      + Add book <span class="kbd">N</span>
+    </button>
   </header>
 
   <main>
+
+    <section class="stats-grid" aria-label="Library statistics">
+      <div class="stat-card">
+        <p class="stat-value" id="statTotal">0</p>
+        <p class="stat-label">Books</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-value" id="statRead">0</p>
+        <p class="stat-label">Read</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-value" id="statUnread">0</p>
+        <p class="stat-label">Unread</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-value" id="statPages">0</p>
+        <p class="stat-label">Pages</p>
+      </div>
+    </section>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Reading progress</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress" id="progressTrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+    </div>
+
+    <section class="toolbar" aria-label="Search, filter and sort books">
+      <input id="searchInput" class="search-input" type="search"
+             placeholder="Search by title or author…" autocomplete="off">
+
+      <div class="filters" id="filterGroup" role="group" aria-label="Filter by status">
+        <button class="chip is-active" data-filter="all" type="button">All</button>
+        <button class="chip" data-filter="unread" type="button">Unread</button>
+        <button class="chip" data-filter="read" type="button">Read</button>
+      </div>
+
+      <select id="sortSelect" class="sort-select" aria-label="Sort books">
+        <option value="newest">Newest first</option>
+        <option value="title">Title A&ndash;Z</option>
+        <option value="author">Author A&ndash;Z</option>
+        <option value="pages">Most pages</option>
+      </select>
+    </section>
+
+    <section class="shelf-controls" aria-label="Shelf light">
+      <p id="shelfHint" class="shelf-hint">Turn on the light to browse your shelves</p>
+      <div class="light-control">
+        <span id="lightLabel" class="light-label">Shelf light</span>
+        <button id="lightToggle" class="switch" type="button" role="switch"
+                aria-checked="false" aria-labelledby="lightLabel">
+          <span class="switch-thumb"></span>
+        </button>
+      </div>
+    </section>
+
     <div id="bookshelf" class="bookshelf"></div>
+
     <p id="emptyState" class="empty-state" hidden>
       The shelves are empty. Add your first book!
     </p>
+
   </main>
+
+  <footer class="site-footer">
+    <p>A project from The Odin Project &middot; Built with vanilla HTML, CSS &amp; JS</p>
+  </footer>
 
   <dialog id="bookDialog">
     <form id="bookForm" novalidate>
       <h2>Register a new book</h2>
 
       <label for="title">Title</label>
-      <input id="title" name="title" type="text" required autocomplete="off" placeholder="The Hobbit">
+      <input id="title" name="title" type="text" required autocomplete="off" placeholder="Harry Potter and the Philosopher´s stone">
 
       <label for="author">Author</label>
-      <input id="author" name="author" type="text" required autocomplete="off" placeholder="J.R.R. Tolkien">
+      <input id="author" name="author" type="text" required autocomplete="off" placeholder="J.K Rowling">
 
       <label for="pages">Pages</label>
-      <input id="pages" name="pages" type="number" min="1" step="1" required inputmode="numeric" placeholder="310">
+      <input id="pages" name="pages" type="number" min="1" step="1" required inputmode="numeric" placeholder="999">
 
       <div class="form-row">
         <label class="checkbox-label" for="read">
@@ -58,16 +125,23 @@
 
   <dialog id="detailDialog">
     <div class="detail">
+      <div id="detailCover" class="detail-cover">
+        <span id="detailCoverTitle"></span>
+        <small id="detailCoverAuthor"></small>
+      </div>
       <h2 id="detailTitle"></h2>
       <p id="detailAuthor" class="detail-author"></p>
       <p id="detailMeta" class="detail-meta"></p>
       <menu>
-        <button id="detailRemove" class="btn btn-danger" type="button">Remove</button>
+        <button id="detailRemove" class="btn btn-danger" type="button">Delete</button>
         <button id="detailToggle" class="btn" type="button">Mark as read</button>
         <button id="detailClose" class="btn btn-primary" type="button">Close</button>
+        <button id="detailMarkUnread" class="btn" type="button">Mark as unread</button>
       </menu>
     </div>
   </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
 
 </body>
 </html>
